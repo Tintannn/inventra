@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asset_categories', function (Blueprint $table) {
+        Schema::create('asset_parameter_values', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
+            $table->foreignId('parameter_definition_id')->constrained('asset_parameter_definitions')->onDelete('cascade');
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asset_categories');
+        Schema::dropIfExists('asset_parameter_values');
     }
 };

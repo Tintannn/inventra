@@ -29,4 +29,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the attributes that should be appended to arrays.
+     */
+    protected $appends = [];
+
+    /**
+     * Indicates if the model should be timestamped.
+     */
+    public $timestamps = true;
 }

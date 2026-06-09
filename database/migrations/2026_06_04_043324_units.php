@@ -11,7 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('units', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->boolean('status')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('restrict');
+        });
     }
 
     /**
@@ -19,6 +30,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role_id']);
+            $table->dropForeign(['unit_id']);
+        });
+
+        Schema::dropIfExists('units');
     }
 };
